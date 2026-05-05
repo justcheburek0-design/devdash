@@ -15,9 +15,9 @@ let state = {
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
-    showOnboarding();
-    applyTheme();
     loadState();
+    applyTheme();
+    showOnboarding();
     updateTime();
     setInterval(updateTime, 1000);
     loadGithubActivity();
