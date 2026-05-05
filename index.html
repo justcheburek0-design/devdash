@@ -36,6 +36,18 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+    
+        /* Dark Theme */
+        body.dark-theme {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        body.dark-theme .glass {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body.dark-theme .bg-white\/10 {
+            background: rgba(0, 0, 0, 0.2) !important;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -52,6 +64,10 @@
                 <div class="flex gap-3">
                     <button onclick="refreshAll()" class="glass px-4 py-2 rounded-lg text-white hover:bg-white/20 transition">
                         <i class="fas fa-sync-alt mr-2"></i>Refresh
+                    </button>
+                    
+                    <button onclick="toggleTheme()" class="glass px-4 py-2 rounded-lg text-white hover:bg-white/20 transition" title="Toggle Dark Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
                     </button>
                     <button onclick="openSettings()" class="glass px-4 py-2 rounded-lg text-white hover:bg-white/20 transition">
                         <i class="fas fa-cog"></i>
@@ -292,5 +308,56 @@
     <script src="advanced.js"></script>
     <script src="features.js"></script>
     <script src="calendar.js"></script>
+
+    <!-- Onboarding Overlay -->
+    <div id="onboardingOverlay" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="glass rounded-2xl p-8 max-w-2xl w-full">
+            <h2 class="text-3xl font-bold text-white mb-4">
+                <i class="fas fa-rocket mr-3"></i>Welcome to DevDash!
+            </h2>
+            <div class="space-y-4 text-white/90 mb-6">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                    <div>
+                        <strong>Tasks:</strong> Add todos, track progress
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                    <div>
+                        <strong>Time Tracker:</strong> Log work sessions
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                    <div>
+                        <strong>Code Snippets:</strong> Save useful code
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                    <div>
+                        <strong>GitHub Activity:</strong> Set username in settings (⚙️)
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                    <div>
+                        <strong>Dark Theme:</strong> Toggle with 🌙 button
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                    <div>
+                        <strong>Data Saved:</strong> Everything persists in browser
+                    </div>
+                </div>
+            </div>
+            <button onclick="closeOnboarding()" class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-3 rounded-lg font-bold hover:opacity-90 transition">
+                Got it! Let's start 🚀
+            </button>
+        </div>
+    </div>
+
 </body>
 </html>

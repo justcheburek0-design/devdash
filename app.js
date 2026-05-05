@@ -1,6 +1,7 @@
 // DevDash - Developer Dashboard App
 // State Management
 let state = {
+    theme: 'light',
     todos: [],
     snippets: [],
     notes: '',
@@ -14,6 +15,8 @@ let state = {
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
+    showOnboarding();
+    applyTheme();
     loadState();
     updateTime();
     setInterval(updateTime, 1000);
@@ -447,6 +450,25 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+
+// Theme Toggle
+function toggleTheme() {
+    state.theme = state.theme === 'light' ? 'dark' : 'light';
+    applyTheme();
+    saveState();
+}
+
+function applyTheme() {
+    const icon = document.getElementById('themeIcon');
+    if (state.theme === 'dark') {
+        document.body.classList.add('dark-theme');
+        if (icon) icon.className = 'fas fa-sun';
+    } else {
+        document.body.classList.remove('dark-theme');
+        if (icon) icon.className = 'fas fa-moon';
+    }
+}
+
 // State Persistence
 function saveState() {
     localStorage.setItem('devdash_state', JSON.stringify(state));
@@ -455,15 +477,31 @@ function saveState() {
 function loadState() {
     const saved = localStorage.getItem('devdash_state');
     if (saved) {
-        const loaded = JSON.parse(saved);
-        state = { ...state, ...loaded };
-        
-        // Don't restore timer running state
-        state.timerRunning = false;
-        state.timerInterval = null;
+        try {
+            const loaded = JSON.parse(saved);
+            state = { ...state, ...loaded };
+            
+            // Don't restore timer running state
+            state.timerRunning = false;
+            state.timerInterval = null;
+        } catch (e) {
+            console.error('Failed to load state:', e);
+        }
     }
 }
 
+
+// Onboarding
+function showOnboarding() {
+    if (!localStorage.getItem('devdash_onboarding_seen')) {
+        document.getElementById('onboardingOverlay').classList.remove('hidden');
+    }
+}
+
+function closeOnboarding() {
+    document.getElementById('onboardingOverlay').classList.add('hidden');
+    localStorage.setItem('devdash_onboarding_seen', 'true');
+}
 // Close settings on Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
